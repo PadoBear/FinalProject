@@ -13,11 +13,11 @@ function level () {
         // 地圖一
         tiles.setTilemap(tilemap`層級1`)
     } else if (Checkpoint == 1) {
-        scene.setBackgroundColor(9)
+        scene.setBackgroundColor(3)
         // 地圖二
         tiles.setTilemap(tilemap`層級1`)
     } else if (Checkpoint == 2) {
-        scene.setBackgroundColor(9)
+        scene.setBackgroundColor(11)
         // 地圖三
         tiles.setTilemap(tilemap`層級1`)
     } else {
@@ -221,7 +221,7 @@ function bullet () {
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 `, mySprite, -300, 10)
-        } else if (mySprite.vx > 0) {
+        } else if (mySprite.vx >= 0) {
             mySprite.setImage(img`
                 ........................
                 ........................
@@ -305,9 +305,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSpri
         `, SpriteKind.Enemy)
     monster.setPosition(mySprite.x + 75, FLOWER.y)
     monster.follow(mySprite, 10)
-    statusbar = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
-    statusbar.max = 30
-    statusbar.attachToSprite(monster)
+    unfriendly = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
+    unfriendly.max = 80
+    unfriendly.attachToSprite(monster)
     otherSprite.destroy()
 })
 sprites.onDestroyed(SpriteKind.Player, function (sprite) {
@@ -323,12 +323,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
-    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, mySprite).value += -33.4
+    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, mySprite).value += -20
 })
+let unfriendly: StatusBarSprite = null
 let monster: Sprite = null
 let projectile2: Sprite = null
 let FLOWER: Sprite = null
-let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
 let Checkpoint = 0
 Checkpoint = 0
@@ -361,8 +361,9 @@ mySprite = sprites.create(img`
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 0)
 level()
-statusbar = statusbars.create(20, 4, StatusBarKind.Health)
-statusbar.attachToSprite(mySprite)
+let friendly = statusbars.create(20, 4, StatusBarKind.Health)
+friendly.max = 100
+friendly.attachToSprite(mySprite)
 // 腳色動作
 game.onUpdate(function () {
     mySprite.setImage(img`
