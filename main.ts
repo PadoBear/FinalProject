@@ -50,6 +50,9 @@ function level () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
     game.over(false)
 })
+statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
+	
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile2 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -95,20 +98,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSpri
         `, SpriteKind.Enemy)
     monster.setPosition(mySprite.x + 75, FLOWER.y)
     monster.follow(mySprite, 10)
-    statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+    statusbar = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
     statusbar.attachToSprite(monster)
     otherSprite.destroy()
 })
-sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
-    if (true) {
-    	
-    } else {
-    	
-    }
-})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.destroy()
-    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += -10
+    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -10
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
