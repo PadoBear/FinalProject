@@ -50,34 +50,31 @@ function level () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
     game.over(false)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    info.changeLifeBy(-1)
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile2 = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . f f f f f f . . . . . . . . . 
+        . f f f f f f f f . . . . . . . 
+        . f f f f f f f f f f f . . . . 
+        . f f f f f f f f f f f f f f . 
+        . f f f f f f f f f f f f f f . 
+        . f f f f f f f f f f f f f . . 
+        . f f f f f f . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 100, 10)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
     Checkpoint += Checkpoint + 1
     level()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSprite) {
-    projectile = sprites.createProjectileFromSide(img`
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        d d d d d d d d d d d d d d d d 
-        `, 0, 50)
-    projectile.setPosition(otherSprite.x, otherSprite.y - 50)
     monster = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -96,19 +93,30 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSpri
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Enemy)
-    monster.setPosition(mySprite.x - 50, mySprite.y - 50)
-    monster.follow(mySprite, 100)
+    monster.setPosition(mySprite.x + 75, FLOWER.y)
+    monster.follow(mySprite, 10)
     statusbar = statusbars.create(20, 4, StatusBarKind.Health)
     statusbar.attachToSprite(monster)
     otherSprite.destroy()
 })
+sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
+    if (true) {
+    	
+    } else {
+    	
+    }
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprite.destroy()
+    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += -10
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
-    statusbar.value += 0
+    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, mySprite).value += -1
     info.changeLifeBy(-1)
 })
 let monster: Sprite = null
-let projectile: Sprite = null
+let projectile2: Sprite = null
 let FLOWER: Sprite = null
 let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
