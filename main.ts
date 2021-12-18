@@ -146,6 +146,11 @@ mySprite = sprites.create(img`
     ........................
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 0)
+if (mySprite.fx < 0) {
+	
+} else {
+	
+}
 info.setLife(3)
 level()
 statusbar = statusbars.create(20, 4, StatusBarKind.Health)
