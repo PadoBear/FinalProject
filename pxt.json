@@ -4,7 +4,8 @@
     "dependencies": {
         "device": "*",
         "animation": "*",
-        "controller": "*"
+        "controller": "*",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.1"
     },
     "files": [
         "main.blocks",

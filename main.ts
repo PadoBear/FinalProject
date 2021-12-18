@@ -1,38 +1,88 @@
 namespace SpriteKind {
     export const res = SpriteKind.create()
 }
+let list: number[] = []
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.vy == 0) {
         mySprite.vy = -100
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSprite) {
-    otherSprite.destroy(effects.spray, 500)
-    for (let index = 0; index <= 4; index++) {
-        projectile = sprites.createProjectileFromSide(img`
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            d d d d d d d d d d d d d d d d 
-            `, 0, 200)
-        projectile.setPosition(mySprite.x, mySprite.y - 50)
+function level () {
+    if (Checkpoint == 0) {
+        scene.setBackgroundColor(9)
+        tiles.setTilemap(tilemap`層級1`)
+    } else {
+        scene.setBackgroundColor(3)
+        tiles.setTilemap(tilemap`層級1`)
     }
+    mySprite.ay = 200
+    scene.cameraFollowSprite(mySprite)
+    info.setLife(3)
+    for (let value of list) {
+    	
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
+        tiles.placeOnTile(mySprite, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
+        FLOWER = sprites.create(img`
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            `, SpriteKind.res)
+        tiles.placeOnTile(FLOWER, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    info.changeLifeBy(-1)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+    Checkpoint += Checkpoint + 1
+    level()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSprite) {
+    projectile = sprites.createProjectileFromSide(img`
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        d d d d d d d d d d d d d d d d 
+        `, 0, 50)
+    projectile.setPosition(otherSprite.x, otherSprite.y - 50)
+    otherSprite.destroy()
 })
 let projectile: Sprite = null
 let FLOWER: Sprite = null
 let mySprite: Sprite = null
+let Checkpoint = 0
+Checkpoint = 0
 mySprite = sprites.create(img`
     ........................
     ........................
@@ -60,33 +110,4 @@ mySprite = sprites.create(img`
     ........................
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 0)
-mySprite.ay = 200
-scene.cameraFollowSprite(mySprite)
-scene.setBackgroundColor(9)
-tiles.setTilemap(tilemap`層級1`)
-for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
-    tiles.placeOnTile(mySprite, value)
-    tiles.setTileAt(value, assets.tile`transparency16`)
-}
-for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
-    FLOWER = sprites.create(img`
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-        `, SpriteKind.res)
-    tiles.placeOnTile(FLOWER, value)
-    tiles.setTileAt(value, assets.tile`transparency16`)
-}
+level()
