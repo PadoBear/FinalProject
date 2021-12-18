@@ -17,7 +17,6 @@ function level () {
     }
     mySprite.ay = 200
     scene.cameraFollowSprite(mySprite)
-    info.setLife(3)
     for (let value of list) {
     	
     }
@@ -48,6 +47,9 @@ function level () {
         tiles.setTileAt(value, assets.tile`transparency16`)
     }
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
+	
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.destroy()
     info.changeLifeBy(-1)
@@ -82,6 +84,7 @@ let projectile: Sprite = null
 let FLOWER: Sprite = null
 let mySprite: Sprite = null
 let Checkpoint = 0
+let statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 Checkpoint = 0
 mySprite = sprites.create(img`
     ........................
