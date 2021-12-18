@@ -112,7 +112,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
-    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, mySprite).value += -1
+    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, mySprite).value += -33
     info.changeLifeBy(-1)
 })
 let monster: Sprite = null
