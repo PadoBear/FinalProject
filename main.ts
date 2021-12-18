@@ -48,7 +48,7 @@ function level () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
-	
+    game.over(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -78,13 +78,41 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSpri
         d d d d d d d d d d d d d d d d 
         `, 0, 50)
     projectile.setPosition(otherSprite.x, otherSprite.y - 50)
+    monster = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . f f f f f f f f f . . . 
+        . . . f f f f f f f f 2 f f . . 
+        . . . f f f f f f f f f f f . . 
+        . . . . f f f f f f f f f f . . 
+        . . . . . f f f f f f f f . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Enemy)
+    monster.setPosition(mySprite.x - 50, mySprite.y - 50)
+    monster.follow(mySprite, 100)
+    statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+    statusbar.attachToSprite(monster)
     otherSprite.destroy()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    statusbar.value += 0
+    info.changeLifeBy(-1)
+})
+let monster: Sprite = null
 let projectile: Sprite = null
 let FLOWER: Sprite = null
+let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
 let Checkpoint = 0
-let statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 Checkpoint = 0
 mySprite = sprites.create(img`
     ........................
@@ -113,4 +141,7 @@ mySprite = sprites.create(img`
     ........................
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 0)
+info.setLife(3)
 level()
+statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+statusbar.attachToSprite(mySprite)
