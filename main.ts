@@ -10,9 +10,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 function level () {
     if (Checkpoint == 0) {
         scene.setBackgroundColor(9)
+        // 地圖一
         tiles.setTilemap(tilemap`層級1`)
     } else {
         scene.setBackgroundColor(3)
+        // 地圖二
         tiles.setTilemap(tilemap`層級1`)
     }
     mySprite.ay = 200
@@ -219,6 +221,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, l
     level()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSprite) {
+    // 敵人一
     monster = sprites.create(img`
         . . . . . b b b b b b . . . . . 
         . . . b b 9 9 9 9 9 9 b b . . . 
@@ -262,6 +265,7 @@ let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
 let Checkpoint = 0
 Checkpoint = 0
+// 腳色一(可男可女)
 mySprite = sprites.create(img`
     ........................
     ........................
