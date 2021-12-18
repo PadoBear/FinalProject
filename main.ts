@@ -1,7 +1,10 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    if (mySprite.vy == 0) {
+        mySprite.vy = -100
+    }
 })
-let mySprite = sprites.create(img`
+let mySprite: Sprite = null
+mySprite = sprites.create(img`
     ........................
     ........................
     ........................
@@ -30,7 +33,7 @@ let mySprite = sprites.create(img`
 controller.moveSprite(mySprite, 100, 0)
 mySprite.ay = 200
 scene.cameraFollowSprite(mySprite)
-scene.setBackgroundColor(1)
+scene.setBackgroundColor(9)
 tiles.setTilemap(tilemap`層級1`)
 for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
