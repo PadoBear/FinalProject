@@ -12,10 +12,16 @@ function level () {
         scene.setBackgroundColor(9)
         // 地圖一
         tiles.setTilemap(tilemap`層級1`)
-    } else {
+    } else if (Checkpoint == 1) {
         scene.setBackgroundColor(9)
         // 地圖二
         tiles.setTilemap(tilemap`層級1`)
+    } else if (Checkpoint == 2) {
+        scene.setBackgroundColor(9)
+        // 地圖三
+        tiles.setTilemap(tilemap`層級1`)
+    } else {
+    	
     }
     mySprite.ay = 200
     scene.cameraFollowSprite(mySprite)
@@ -278,7 +284,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, l
     level()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSprite) {
-    // 變數monster
     // 敵人一
     monster = sprites.create(img`
         . . . . . b b b b b b . . . . . 
