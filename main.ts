@@ -309,6 +309,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.res, function (sprite, otherSpri
     monster.follow(mySprite, 10)
     unfriendly = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
     unfriendly.max = 80
+    unfriendly.setColor(7, 2)
     unfriendly.attachToSprite(monster)
     otherSprite.destroy()
 })
@@ -365,6 +366,7 @@ controller.moveSprite(mySprite, 100, 0)
 level()
 let friendly = statusbars.create(20, 4, StatusBarKind.Health)
 friendly.max = 100
+friendly.setColor(7, 2)
 friendly.attachToSprite(mySprite)
 // 腳色動作
 game.onUpdate(function () {
