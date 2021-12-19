@@ -21,7 +21,9 @@ function level () {
         // 地圖三
         tiles.setTilemap(tilemap`層級1`)
     } else {
-    	
+        scene.setBackgroundColor(11)
+        // 地圖三
+        tiles.setTilemap(tilemap`層級1`)
     }
     mySprite.ay = 200
     scene.cameraFollowSprite(mySprite)
